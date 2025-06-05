@@ -49,25 +49,5 @@ class Patient(models.Model):
         ]
     
     def __str__(self):
-        return f"{self.full_name} - {self.policy_number}"
+        return f"{self.full_name}"
     
-    def get_gender_display_icon(self):
-        """Return icon class for gender display"""
-        if self.gender == 'M':
-            return 'fas fa-mars text-primary'
-        elif self.gender == 'F':
-            return 'fas fa-venus text-danger'
-        else:
-            return 'fas fa-genderless text-secondary'
-    
-    def get_absolute_url(self):
-        return reverse('pams:patient_detail', kwargs={'patient_id': self.id})
-    
-    def get_age_group(self):
-        """Return age group classification"""
-        if self.age < 18:
-            return 'Minor'
-        elif self.age < 65:
-            return 'Adult'
-        else:
-            return 'Senior'

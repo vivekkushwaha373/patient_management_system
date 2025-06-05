@@ -7,145 +7,127 @@
 
 {% block content %}
 <!-- Statistics Cards -->
-<div class="row">
-  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-    <div class="card card-statistic-1">
-      <div class="card-icon bg-primary">
-        <i class="far fa-user"></i>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="flex items-center">
+      <div class="bg-primary rounded-lg p-3 mr-4">
+        <i class="far fa-user text-white text-xl"></i>
       </div>
-      <div class="card-wrap">
-        <div class="card-header">
-          <h4>Total Patients</h4>
-        </div>
-        <div class="card-body">
-          {{ total_patients }}
-        </div>
+      <div>
+        <h4 class="text-gray-600 text-sm font-medium">Total Patients</h4>
+        <p class="text-2xl font-bold text-gray-900">{{ total_patients }}</p>
       </div>
     </div>
   </div>
-  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-    <div class="card card-statistic-1">
-      <div class="card-icon bg-danger">
-        <i class="fas fa-venus"></i>
+  
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="flex items-center">
+      <div class="bg-red-500 rounded-lg p-3 mr-4">
+        <i class="fas fa-venus text-white text-xl"></i>
       </div>
-      <div class="card-wrap">
-        <div class="card-header">
-          <h4>Female Patients</h4>
-        </div>
-        <div class="card-body">
-          {{ female_count }}
-        </div>
+      <div>
+        <h4 class="text-gray-600 text-sm font-medium">Female Patients</h4>
+        <p class="text-2xl font-bold text-gray-900">{{ female_count }}</p>
       </div>
     </div>
   </div>
-  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-    <div class="card card-statistic-1">
-      <div class="card-icon bg-warning">
-        <i class="fas fa-mars"></i>
+  
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="flex items-center">
+      <div class="bg-yellow-500 rounded-lg p-3 mr-4">
+        <i class="fas fa-mars text-white text-xl"></i>
       </div>
-      <div class="card-wrap">
-        <div class="card-header">
-          <h4>Male Patients</h4>
-        </div>
-        <div class="card-body">
-          {{ male_count }}
-        </div>
+      <div>
+        <h4 class="text-gray-600 text-sm font-medium">Male Patients</h4>
+        <p class="text-2xl font-bold text-gray-900">{{ male_count }}</p>
       </div>
     </div>
   </div>
-  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-    <div class="card card-statistic-1">
-      <div class="card-icon bg-success">
-        <i class="fas fa-shield-alt"></i>
+  
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <div class="flex items-center">
+      <div class="bg-green-500 rounded-lg p-3 mr-4">
+        <i class="fas fa-shield-alt text-white text-xl"></i>
       </div>
-      <div class="card-wrap">
-        <div class="card-header">
-          <h4>Insurance Providers</h4>
-        </div>
-        <div class="card-body">
-          {{ insurance_stats|length }}
-        </div>
+      <div>
+        <h4 class="text-gray-600 text-sm font-medium">Insurance Providers</h4>
+        <p class="text-2xl font-bold text-gray-900">{{ insurance_stats|length }}</p>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Main Dashboard Content -->
-<div class="row">
-  <div class="col-lg-8 col-md-12 col-12 col-sm-12">
-    <div class="card">
-      <div class="card-header">
-        <h4>Patient Demographics</h4>
-        <div class="card-header-action">
-          <a href="{% url 'pams:patient_list' %}" class="btn btn-primary">View All Patients</a>
-        </div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+  <div class="lg:col-span-2">
+    <div class="bg-white rounded-lg shadow-md">
+      <div class="border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+        <h4 class="text-lg font-semibold text-gray-900">Patient Demographics</h4>
+        <a href="{% url 'pams:patient_list' %}" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+          View All Patients
+        </a>
       </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h4>Gender Distribution</h4>
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white border border-gray-200 rounded-lg">
+            <div class="bg-primary text-white px-4 py-3 rounded-t-lg">
+              <h4 class="font-semibold">Gender Distribution</h4>
+            </div>
+            <div class="p-4 space-y-4">
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-medium text-gray-700">Male</span>
+                  <span class="text-sm text-gray-500 font-semibold">{{ male_count }}</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div class="bg-primary h-2 rounded-full transition-all duration-500" 
+                       style="width: {% if total_patients > 0 %}{% widthratio male_count total_patients 100 %}{% else %}0{% endif %}%"></div>
+                </div>
               </div>
-              <div class="card-body">
-                <div class="mb-2">
-                  <div class="text-small float-right font-weight-bold text-muted">{{ male_count }}</div>
-                  <div class="font-weight-bold mb-1">Male</div>
-                  <div class="progress" data-height="3">
-                    <div class="progress-bar bg-primary" role="progressbar" 
-                         data-width="{% if total_patients > 0 %}{{ male_count|floatformat:0 }}{% else %}0{% endif %}%" 
-                         aria-valuenow="{{ male_count }}" aria-valuemin="0" aria-valuemax="{{ total_patients }}"></div>
-                  </div>
+              
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-medium text-gray-700">Female</span>
+                  <span class="text-sm text-gray-500 font-semibold">{{ female_count }}</span>
                 </div>
-                <div class="mb-2">
-                  <div class="text-small float-right font-weight-bold text-muted">{{ female_count }}</div>
-                  <div class="font-weight-bold mb-1">Female</div>
-                  <div class="progress" data-height="3">
-                    <div class="progress-bar bg-danger" role="progressbar" 
-                         data-width="{% if total_patients > 0 %}{{ female_count|floatformat:0 }}{% else %}0{% endif %}%" 
-                         aria-valuenow="{{ female_count }}" aria-valuemin="0" aria-valuemax="{{ total_patients }}"></div>
-                  </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div class="bg-red-500 h-2 rounded-full transition-all duration-500" 
+                       style="width: {% if total_patients > 0 %}{% widthratio female_count total_patients 100 %}{% else %}0{% endif %}%"></div>
                 </div>
-                <div class="mb-2">
-                  <div class="text-small float-right font-weight-bold text-muted">{{ other_count }}</div>
-                  <div class="font-weight-bold mb-1">Other</div>
-                  <div class="progress" data-height="3">
-                    <div class="progress-bar bg-secondary" role="progressbar" 
-                         data-width="{% if total_patients > 0 %}{{ other_count|floatformat:0 }}{% else %}0{% endif %}%" 
-                         aria-valuenow="{{ other_count }}" aria-valuemin="0" aria-valuemax="{{ total_patients }}"></div>
-                  </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-medium text-gray-700">Other</span>
+                  <span class="text-sm text-gray-500 font-semibold">{{ other_count }}</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div class="bg-gray-500 h-2 rounded-full transition-all duration-500" 
+                       style="width: {% if total_patients > 0 %}{% widthratio other_count total_patients 100 %}{% else %}0{% endif %}%"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-8">
-            <div class="card card-success">
-              <div class="card-header">
-                <h4>Quick Actions</h4>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <a href="{% url 'admin:pams_patient_add' %}" class="btn btn-block btn-primary">
-                      <i class="fas fa-plus-circle"></i> Add New Patient
-                    </a>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <a href="{% url 'pams:patient_list' %}" class="btn btn-block btn-info">
-                      <i class="fas fa-list"></i> View All Patients
-                    </a>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <a href="{% url 'admin:index' %}" class="btn btn-block btn-warning">
-                      <i class="fas fa-cog"></i> Admin Panel
-                    </a>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <button class="btn btn-block btn-success" onclick="loadDummyData()">
-                      <i class="fas fa-database"></i> Load Sample Data
-                    </button>
-                  </div>
-                </div>
+          
+          <div class="bg-white border border-gray-200 rounded-lg">
+            <div class="bg-green-500 text-white px-4 py-3 rounded-t-lg">
+              <h4 class="font-semibold">Quick Actions</h4>
+            </div>
+            <div class="p-4">
+              <div class="grid grid-cols-1 gap-3">
+                <a href="{% url 'admin:pams_patient_add' %}" 
+                   class="bg-primary text-white px-4 py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
+                  <i class="fas fa-plus-circle mr-2"></i> Add New Patient
+                </a>
+                <a href="{% url 'pams:patient_list' %}" 
+                   class="bg-blue-500 text-white px-4 py-3 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center">
+                  <i class="fas fa-list mr-2"></i> View All Patients
+                </a>
+                <a href="{% url 'admin:index' %}" 
+                   class="bg-yellow-500 text-white px-4 py-3 rounded-lg hover:bg-yellow-600 transition-colors flex items-center justify-center">
+                  <i class="fas fa-cog mr-2"></i> Admin Panel
+                </a>
+               
               </div>
             </div>
           </div>
@@ -153,61 +135,61 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-4 col-md-12 col-12 col-sm-12">
-    <div class="card">
-      <div class="card-header">
-        <h4>Insurance Providers</h4>
+  
+  <div class="space-y-6">
+    <div class="bg-white rounded-lg shadow-md">
+      <div class="border-b border-gray-200 px-6 py-4">
+        <h4 class="text-lg font-semibold text-gray-900">Insurance Providers</h4>
       </div>
-      <div class="card-body">
+      <div class="p-6">
         {% if insurance_stats %}
-          {% for provider, count in insurance_stats.items %}
-          <div class="mb-3">
-            <div class="text-small float-right font-weight-bold text-muted">{{ count }} patient{{ count|pluralize }}</div>
-            <div class="font-weight-bold mb-1">{{ provider }}</div>
-            <div class="progress" data-height="3">
-              <div class="progress-bar bg-primary" role="progressbar" 
-                   data-width="{% widthratio count total_patients 100 %}%" 
-                   aria-valuenow="{{ count }}" aria-valuemin="0" aria-valuemax="{{ total_patients }}"></div>
+          <div class="space-y-4">
+            {% for provider, count in insurance_stats.items %}
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-medium text-gray-700">{{ provider }}</span>
+                <span class="text-sm text-gray-500 font-semibold">{{ count }} patient{{ count|pluralize }}</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-primary h-2 rounded-full transition-all duration-500" 
+                     style="width: {% widthratio count total_patients 100 %}%"></div>
+              </div>
             </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         {% else %}
-          <div class="empty-state" data-height="200">
-            <div class="empty-state-icon">
-              <i class="fas fa-shield-alt"></i>
+          <div class="text-center py-12">
+            <div class="text-gray-400 mb-4">
+              <i class="fas fa-shield-alt text-4xl"></i>
             </div>
-            <h2>No Insurance Data</h2>
-            <p class="lead">Add patients to see insurance provider statistics.</p>
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">No Insurance Data</h2>
+            <p class="text-gray-500">Add patients to see insurance provider statistics.</p>
           </div>
         {% endif %}
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-header">
-        <h4>System Information</h4>
+    <div class="bg-white rounded-lg shadow-md">
+      <div class="border-b border-gray-200 px-6 py-4">
+        <h4 class="text-lg font-semibold text-gray-900">System Information</h4>
       </div>
-      <div class="card-body">
-        <div class="summary">
-          <div class="summary-info">
-            <h4>ClaimBuddy PAMS v1.0</h4>
-            <p class="text-muted">Patient Management System</p>
-          </div>
+      <div class="p-6 space-y-4">
+        <div class="border-b border-gray-100 pb-3">
+          <h4 class="font-semibold text-gray-900">ClaimBuddy PAMS v1.0</h4>
+          <p class="text-gray-500 text-sm">Patient Management System</p>
         </div>
-        <div class="summary">
-          <div class="summary-info">
-            <h4>Database Status</h4>
-            <p class="text-muted">
-              <span class="badge badge-success">Active</span>
-              SQLite Database
-            </p>
-          </div>
+        <div class="border-b border-gray-100 pb-3">
+          <h4 class="font-semibold text-gray-900">Database Status</h4>
+          <p class="text-gray-500 text-sm">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              Active
+            </span>
+            SQLite Database
+          </p>
         </div>
-        <div class="summary">
-          <div class="summary-info">
-            <h4>Last Updated</h4>
-            <p class="text-muted">{{ "now"|date:"F j, Y g:i A" }}</p>
-          </div>
+        <div>
+          <h4 class="font-semibold text-gray-900">Last Updated</h4>
+          <p class="text-gray-500 text-sm">{{ "now"|date:"F j, Y g:i A" }}</p>
         </div>
       </div>
     </div>
@@ -216,24 +198,20 @@
 
 <!-- Recent Activity -->
 {% if total_patients > 0 %}
-<div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header">
-        <h4>Welcome to ClaimBuddy PAMS</h4>
-      </div>
-      <div class="card-body">
-        <div class="alert alert-info">
-          <h5>Getting Started</h5>
-          <p>Your Patient Management System is ready to use. Here's what you can do:</p>
-          <ul class="mb-0">
-            <li><strong>Add Patients:</strong> Use the "Add New Patient" button to register new patients</li>
-            <li><strong>View Patients:</strong> Browse all patients in the Patient List with search and pagination</li>
-            <li><strong>Manage Data:</strong> Use the Admin Panel for advanced patient management</li>
-            <li><strong>Track Statistics:</strong> Monitor patient demographics and insurance provider distribution</li>
-          </ul>
-        </div>
-      </div>
+<div class="bg-white rounded-lg shadow-md">
+  <div class="border-b border-gray-200 px-6 py-4">
+    <h4 class="text-lg font-semibold text-gray-900">Welcome to ClaimBuddy PAMS</h4>
+  </div>
+  <div class="p-6">
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <h5 class="font-semibold text-blue-900 mb-2">Getting Started</h5>
+      <p class="text-blue-800 mb-3">Your Patient Management System is ready to use. Here's what you can do:</p>
+      <ul class="text-blue-800 space-y-1">
+        <li><strong>Add Patients:</strong> Use the "Add New Patient" button to register new patients</li>
+        <li><strong>View Patients:</strong> Browse all patients in the Patient List with search and pagination</li>
+        <li><strong>Manage Data:</strong> Use the Admin Panel for advanced patient management</li>
+        <li><strong>Track Statistics:</strong> Monitor patient demographics and insurance provider distribution</li>
+      </ul>
     </div>
   </div>
 </div>
@@ -242,19 +220,17 @@
 
 {% block extra_js %}
 <script>
-function loadDummyData() {
-  if (confirm('This will load sample patient data. Continue?')) {
-    // In a real application, you would make an AJAX call to load dummy data
-    alert('In a production environment, this would load sample data via AJAX. For now, use the management command: python manage.py load_dummy_patients');
-  }
-}
 
-// Initialize progress bars
-$(document).ready(function() {
-  $('.progress .progress-bar').each(function() {
-    var width = $(this).data('width');
-    $(this).css('width', width + '%');
-  });
+
+// Animate progress bars on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Add a small delay to ensure the page is fully rendered
+  setTimeout(() => {
+    const progressBars = document.querySelectorAll('[style*="width:"]');
+    progressBars.forEach(bar => {
+      bar.style.transition = 'width 1s ease-in-out';
+    });
+  }, 100);
 });
 </script>
 {% endblock %}

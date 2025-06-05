@@ -4,133 +4,342 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>{% block title %}ClaimBuddy PAMS{% endblock %}</title>
-
-  <!-- General CSS Files -->
-  <link rel="stylesheet" href="{% load static %}{% static 'stisla/css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% load static %}{% static 'stisla/css/all.css' %}">
-
-  <!-- CSS Libraries -->
-  <link rel="stylesheet" href="{% load static %}{% static 'stisla/css/selectric.css' %}">
-
-  <!-- Template CSS -->
-  <link rel="stylesheet" href="{% load static %}{% static 'stisla/css/style.css' %}">
-  <link rel="stylesheet" href="{% load static %}{% static '/css/components.css' %}">
-
-  {% block extra_css %}{% endblock %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6366f1',
+            secondary: '#8b5cf6'
+          }
+        }
+      }
+    }
+  </script>
 </head>
 
-<body>
-  <div id="app">
-    <div class="main-wrapper main-wrapper-1">
-      <div class="navbar-bg"></div>
-      <nav class="navbar navbar-expand-lg main-navbar">
-        <form class="form-inline mr-auto">
-          <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-          </ul>
-        </form>
-        <ul class="navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-              <img alt="image" src="{% load static %}{% static 'stisla/img/avatar/avatar-1.png' %}" class="rounded-circle mr-1">
-              <div class="d-sm-none d-lg-inline-block">Hi, Admin</div>
+<body class="bg-gray-100">
+  <div class="min-h-screen flex">
+    <!-- Sidebar -->
+    <div class="w-64 bg-white shadow-lg">
+      <div class="p-6">
+        <h1 class="text-xl font-bold text-gray-800">CLAIMBUDDY</h1>
+        <p class="text-sm text-gray-500 mt-1">PAMS</p>
+      </div>
+      
+      <nav class="mt-6">
+        <div class="px-6 py-2">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">DASHBOARD</p>
+        </div>
+        
+        <ul class="mt-2">
+          <li class="px-6 py-2">
+            <a href="{% url 'pams:dashboard' %}" class="flex items-center text-primary bg-primary/10 rounded-lg px-3 py-2">
+              <i class="fas fa-fire w-5 h-5 mr-3"></i>
+              <span class="font-medium">Dashboard</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <a href="{% url 'admin:index' %}" class="dropdown-item has-icon">
-                <i class="fas fa-cog"></i> Admin Panel
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item has-icon text-danger">
-                <i class="fas fa-sign-out-alt"></i> Logout
-              </a>
-            </div>
+          </li>
+          <li class="px-6 py-2">
+            <a href="{% url 'pams:patient_list' %}" class="flex items-center text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg px-3 py-2 transition-colors">
+              <i class="fas fa-users w-5 h-5 mr-3"></i>
+              <span>Patients</span>
+            </a>
+          </li>
+        </ul>
+
+      
+
+        <div class="px-6 py-2 mt-6">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">CLAIMBUDDY</p>
+        </div>
+        
+      
+
+      
+        
+        <ul class="mt-2">
+          <li class="px-6 py-2">
+            <a href="{% url 'admin:index' %}" class="flex items-center text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg px-3 py-2 transition-colors">
+              <i class="fas fa-cog w-5 h-5 mr-3"></i>
+              <span>Admin Panel</span>
+              <i class="fas fa-chevron-right ml-auto text-xs"></i>
+            </a>
           </li>
         </ul>
       </nav>
-      <div class="main-sidebar sidebar-style-2">
-        <aside id="sidebar-wrapper">
-          <div class="sidebar-brand">
-            <a href="{% url 'pams:dashboard' %}">ClaimBuddy PAMS</a>
-          </div>
-          <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{% url 'pams:dashboard' %}">CB</a>
-          </div>
-          <ul class="sidebar-menu">
-            <li class="menu-header">Main Navigation</li>
-            <li class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-              <a class="nav-link" href="{% url 'pams:dashboard' %}">
-                <i class="fas fa-fire"></i> <span>Dashboard</span>
-              </a>
-            </li>
-            <li class="{% if request.resolver_match.url_name == 'patient_list' %}active{% endif %}">
-              <a class="nav-link" href="{% url 'pams:patient_list' %}">
-                <i class="fas fa-users"></i> <span>Patients</span>
-              </a>
-            </li>
-            <li class="menu-header">Administration</li>
-            <li>
-              <a class="nav-link" href="{% url 'admin:index' %}">
-                <i class="fas fa-cog"></i> <span>Admin Panel</span>
-              </a>
-            </li>
-          </ul>
-        </aside>
-      </div>
+    </div>
 
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-          <div class="section-header">
-            <h1>{% block page_title %}Dashboard{% endblock %}</h1>
-            <div class="section-header-breadcrumb">
-              <div class="breadcrumb-item active"><a href="{% url 'pams:dashboard' %}">Dashboard</a></div>
-              {% block breadcrumb %}{% endblock %}
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <!-- Top Header -->
+      <header class="bg-gradient-to-r from-primary to-secondary h-20 flex items-center justify-between px-6 text-white">
+        <div class="flex items-center">
+          <button class="p-2 rounded-lg hover:bg-white/10 transition-colors">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="ml-4">
+            <div class="relative">
+              <input type="text" placeholder="Search" class="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg px-4 py-2 pl-10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 w-80">
+              <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <button class="p-2 rounded-lg hover:bg-white/10 transition-colors relative">
+            <i class="fas fa-envelope"></i>
+          </button>
+          <button class="p-2 rounded-lg hover:bg-white/10 transition-colors relative">
+            <i class="fas fa-bell"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+          </button>
+          
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+              <i class="fas fa-user text-sm"></i>
+            </div>
+            <div class="relative">
+              <button onclick="location.href='{% url 'admin:index' %}'"  class="flex items-center space-x-2 hover:bg-white/10 rounded-lg px-3 py-2 transition-colors">
+              
+                <span class="font-medium">Hi, Admin</span>
+                <i class="fas fa-chevron-down text-sm"></i>
+              </button>
+              <!-- Dropdown menu would go here -->
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <main class="flex-1 p-6">
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold text-gray-800">{% block page_title %}Dashboard{% endblock %}</h1>
+          <div class="flex items-center space-x-2 text-sm text-gray-500 mt-1">
+            <a href="{% url 'pams:dashboard' %}" class="hover:text-primary">Dashboard</a>
+            {% block breadcrumb %}{% endblock %}
+          </div>
+        </div>
+
+        {% if messages %}
+          {% for message in messages %}
+            {% if message.tags == 'error' %}
+              <div class="mb-4 p-4 rounded-lg border-l-4 border-red-500 bg-red-50">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-triangle text-red-500"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm text-red-700">{{ message }}</p>
+                  </div>
+                  <div class="ml-auto pl-3">
+                    <button class="text-red-400 hover:text-red-600">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            {% elif message.tags == 'warning' %}
+              <div class="mb-4 p-4 rounded-lg border-l-4 border-yellow-500 bg-yellow-50">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm text-yellow-700">{{ message }}</p>
+                  </div>
+                  <div class="ml-auto pl-3">
+                    <button class="text-yellow-400 hover:text-yellow-600">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              <div class="mb-4 p-4 rounded-lg border-l-4 border-green-500 bg-green-50">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <i class="fas fa-check-circle text-green-500"></i>
+                  </div>
+                  <div class="ml-3">
+                    <p class="text-sm text-green-700">{{ message }}</p>
+                  </div>
+                  <div class="ml-auto pl-3">
+                    <button class="text-green-400 hover:text-green-600">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                <i class="fas fa-user-md text-white"></i>
+              </div>
+              <div class="ml-4">
+                <p class="text-sm text-gray-500">Total Doctors</p>
+                <p class="text-2xl font-bold text-gray-800">10</p>
+              </div>
             </div>
           </div>
 
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-file-medical text-white"></i>
               </div>
-            {% endfor %}
-          {% endif %}
-
-          <div class="section-body">
-            {% block content %}{% endblock %}
+              <div class="ml-4">
+                <p class="text-sm text-gray-500">Claims</p>
+                <p class="text-2xl font-bold text-gray-800">42</p>
+              </div>
+            </div>
           </div>
-        </section>
-      </div>
-      
-      <footer class="main-footer">
-        <div class="footer-left">
-          Copyright &copy; 2024 <div class="bullet"></div> ClaimBuddy Technologies
+
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-chart-bar text-white"></i>
+              </div>
+              <div class="ml-4">
+                <p class="text-sm text-gray-500">Reports</p>
+                <p class="text-2xl font-bold text-gray-800">1,201</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-users text-white"></i>
+              </div>
+              <div class="ml-4">
+                <p class="text-sm text-gray-500">Active Patients</p>
+                <p class="text-2xl font-bold text-gray-800">47</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="footer-right">
-          Patient Management System v1.0
+        {% block content %}{% endblock %}
+        <!-- Charts and Activity Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Statistics Chart -->
+          <div class="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-lg font-semibold text-gray-800">Statistics</h3>
+              <div class="flex space-x-2">
+                <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium">Week</button>
+                <button class="px-4 py-2 text-gray-500 hover:text-gray-700 rounded-lg text-sm font-medium">Month</button>
+              </div>
+            </div>
+            
+            <!-- Simple Chart Visualization -->
+            <div class="h-64 flex items-end justify-between space-x-2">
+              <div class="flex flex-col items-center">
+                <div class="w-8 bg-primary rounded-t-lg" style="height: 180px;"></div>
+                <span class="text-xs text-gray-500 mt-2">Mon</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-8 bg-primary rounded-t-lg" style="height: 120px;"></div>
+                <span class="text-xs text-gray-500 mt-2">Tue</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-8 bg-primary rounded-t-lg" style="height: 160px;"></div>
+                <span class="text-xs text-gray-500 mt-2">Wed</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-8 bg-primary rounded-t-lg" style="height: 90px;"></div>
+                <span class="text-xs text-gray-500 mt-2">Thu</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-8 bg-primary rounded-t-lg" style="height: 140px;"></div>
+                <span class="text-xs text-gray-500 mt-2">Fri</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-8 bg-primary rounded-t-lg" style="height: 200px;"></div>
+                <span class="text-xs text-gray-500 mt-2">Sat</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="w-8 bg-primary rounded-t-lg" style="height: 100px;"></div>
+                <span class="text-xs text-gray-500 mt-2">Sun</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activities -->
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6">Recent Activities</h3>
+            
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                  <span class="text-white text-xs font-medium">DM</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-800">Dr. Maria Johnson</p>
+                  <p class="text-xs text-gray-500">New patient claim submitted for review</p>
+                  <p class="text-xs text-gray-400 mt-1">Now</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span class="text-white text-xs font-medium">AP</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-800">Admin Portal</p>
+                  <p class="text-xs text-gray-500">System backup completed successfully</p>
+                  <p class="text-xs text-gray-400 mt-1">12m</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span class="text-white text-xs font-medium">PS</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-800">Patient Services</p>
+                  <p class="text-xs text-gray-500">New patient registration completed</p>
+                  <p class="text-xs text-gray-400 mt-1">17m</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span class="text-white text-xs font-medium">CM</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-800">Claims Manager</p>
+                  <p class="text-xs text-gray-500">Monthly report generated and sent</p>
+                  <p class="text-xs text-gray-400 mt-1">21m</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-white border-t border-gray-200 px-6 py-4">
+        <div class="flex justify-between items-center text-sm text-gray-500">
+          <div>
+            Copyright &copy; 2024 • ClaimBuddy Technologies
+          </div>
+          <div>
+            Patient Management System v1.0
+          </div>
         </div>
       </footer>
     </div>
   </div>
-
-  <!-- General JS Scripts -->
-  <script src="{% load static %}{% static 'stisla/js/jquery-3.3.1.min.js' %}"></script>
-  <script src="{% load static %}{% static 'stisla/js/popper.min.js' %}"></script>
-  <script src="{% load static %}{% static 'stisla/js/bootstrap.min.js' %}"></script>
-  <script src="{% load static %}{% static 'stisla/js/jquery.nicescroll.min.js' %}"></script>
-  <script src="{% load static %}{% static 'stisla/js/moment.min.js' %}"></script>
-  <script src="{% load static %}{% static 'stisla/js/stisla.js' %}"></script>
-  
-  <!-- JS Libraies -->
-  <script src="{% load static %}{% static 'stisla/js/jquery.selectric.min.js' %}"></script>
-
-  <!-- Template JS File -->
-  <script src="{% load static %}{% static 'stisla/js/scripts.js' %}"></script>
-  <script src="{% load static %}{% static 'stisla/js/custom.js' %}"></script>
 
   {% block extra_js %}{% endblock %}
 </body>

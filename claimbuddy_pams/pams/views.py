@@ -35,6 +35,7 @@ def dashboard(request):
 
 def patient_list(request):
     """View to display list of all patients with search and pagination"""
+    # patients = Patient.objects.all()
     patients = Patient.objects.all()
     
     # Search functionality
