@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static_root/
+*.mo
+
+# If using Django's default static files
+/static/
+
+# Ignore .env or other secret config
+.env
+.env.*
+
+# Virtual environments
+pams_env/
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+
+# VSCode and PyCharm
+.vscode/
+.idea/
+
+# Migrations (optional, if you auto-generate)
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+.tox/
+.nox/
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+
+# macOS
+.DS_Store
+
+# pip tools
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Build files
+build/
+dist/
+*.egg-info/
+.eggs/
