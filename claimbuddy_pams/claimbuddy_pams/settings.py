@@ -1,11 +1,17 @@
 import os
-
+from decouple import config
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'my-secret-key'
-DEBUG = True
+SECRET_KEY = None
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+if DEBUG:
+    SECRET_KEY = 'my-secret-dev-key'
+else:
+    SECRET_KEY = config('SECRET_KEY')
+
 
 ALLOWED_HOSTS = []
 
