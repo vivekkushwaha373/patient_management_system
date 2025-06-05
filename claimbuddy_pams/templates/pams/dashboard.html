@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - ClaimBuddy PAMS{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Statistics Cards -->
+<div class="row">
+  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="card card-statistic-1">
+      <div class="card-icon bg-primary">
+        <i class="far fa-user"></i>
+      </div>
+      <div class="card-wrap">
+        <div class="card-header">
+          <h4>Total Patients</h4>
+        </div>
+        <div class="card-body">
+          {{ total_patients }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="card card-statistic-1">
+      <div class="card-icon bg-danger">
+        <i class="fas fa-venus"></i>
+      </div>
+      <div class="card-wrap">
+        <div class="card-header">
+          <h4>Female Patients</h4>
+        </div>
+        <div class="card-body">
+          {{ female_count }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="card card-statistic-1">
+      <div class="card-icon bg-warning">
+        <i class="fas fa-mars"></i>
+      </div>
+      <div class="card-wrap">
+        <div class="card-header">
+          <h4>Male Patients</h4>
+        </div>
+        <div class="card-body">
+          {{ male_count }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+    <div class="card card-statistic-1">
+      <div class="card-icon bg-success">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <div class="card-wrap">
+        <div class="card-header">
+          <h4>Insurance Providers</h4>
+        </div>
+        <div class="card-body">
+          {{ insurance_stats|length }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Dashboard Content -->
+<div class="row">
+  <div class="col-lg-8 col-md-12 col-12 col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h4>Patient Demographics</h4>
+        <div class="card-header-action">
+          <a href="{% url 'pams:patient_list' %}" class="btn btn-primary">View All Patients</a>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h4>Gender Distribution</h4>
+              </div>
+              <div class="card-body">
+                <div class="mb-2">
+                  <div class="text-small float-right font-weight-bold text-muted">{{ male_count }}</div>
+                  <div class="font-weight-bold mb-1">Male</div>
+                  <div class="progress" data-height="3">
+                    <div class="progress-bar bg-primary" role="progressbar" 
+                         data-width="{% if total_patients > 0 %}{{ male_count|floatformat:0 }}{% else %}0{% endif %}%" 
+                         aria-valuenow="{{ male_count }}" aria-valuemin="0" aria-valuemax="{{ total_patients }}"></div>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <div class="text-small float-right font-weight-bold text-muted">{{ female_count }}</div>
+                  <div class="font-weight-bold mb-1">Female</div>
+                  <div class="progress" data-height="3">
+                    <div class="progress-bar bg-danger" role="progressbar" 
+                         data-width="{% if total_patients > 0 %}{{ female_count|floatformat:0 }}{% else %}0{% endif %}%" 
+                         aria-valuenow="{{ female_count }}" aria-valuemin="0" aria-valuemax="{{ total_patients }}"></div>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <div class="text-small float-right font-weight-bold text-muted">{{ other_count }}</div>
+                  <div class="font-weight-bold mb-1">Other</div>
+                  <div class="progress" data-height="3">
+                    <div class="progress-bar bg-secondary" role="progressbar" 
+                         data-width="{% if total_patients > 0 %}{{ other_count|floatformat:0 }}{% else %}0{% endif %}%" 
+                         aria-valuenow="{{ other_count }}" aria-valuemin="0" aria-valuemax="{{ total_patients }}"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card card-success">
+              <div class="card-header">
+                <h4>Quick Actions</h4>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <a href="{% url 'admin:pams_patient_add' %}" class="btn btn-block btn-primary">
+                      <i class="fas fa-plus-circle"></i> Add New Patient
+                    </a>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <a href="{% url 'pams:patient_list' %}" class="btn btn-block btn-info">
+                      <i class="fas fa-list"></i> View All Patients
+                    </a>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <a href="{% url 'admin:index' %}" class="btn btn-block btn-warning">
+                      <i class="fas fa-cog"></i> Admin Panel
+                    </a>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <button class="btn btn-block btn-success" onclick="loadDummyData()">
+                      <i class="fas fa-database"></i> Load Sample Data
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-12 col-12 col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h4>Insurance Providers</h4>
+      </div>
+      <div class="card-body">
+        {% if insurance_stats %}
+          {% for provider, count in insurance_stats.items %}
+          <div class="mb-3">
+            <div class="text-small float-right font-weight-bold text-muted">{{ count }} patient{{ count|pluralize }}</div>
+            <div class="font-weight-bold mb-1">{{ provider }}</div>
+            <div class="progress" data-height="3">
+              <div class="progress-bar bg-primary" role="progressbar" 
+                   data-width="{% widthratio count total_patients 100 %}%" 
+                   aria-valuenow="{{ count }}" aria-valuemin="0" aria-valuemax="{{ total_patients }}"></div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state" data-height="200">
+            <div class="empty-state-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h2>No Insurance Data</h2>
+            <p class="lead">Add patients to see insurance provider statistics.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h4>System Information</h4>
+      </div>
+      <div class="card-body">
+        <div class="summary">
+          <div class="summary-info">
+            <h4>ClaimBuddy PAMS v1.0</h4>
+            <p class="text-muted">Patient Management System</p>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="summary-info">
+            <h4>Database Status</h4>
+            <p class="text-muted">
+              <span class="badge badge-success">Active</span>
+              SQLite Database
+            </p>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="summary-info">
+            <h4>Last Updated</h4>
+            <p class="text-muted">{{ "now"|date:"F j, Y g:i A" }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Activity -->
+{% if total_patients > 0 %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4>Welcome to ClaimBuddy PAMS</h4>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-info">
+          <h5>Getting Started</h5>
+          <p>Your Patient Management System is ready to use. Here's what you can do:</p>
+          <ul class="mb-0">
+            <li><strong>Add Patients:</strong> Use the "Add New Patient" button to register new patients</li>
+            <li><strong>View Patients:</strong> Browse all patients in the Patient List with search and pagination</li>
+            <li><strong>Manage Data:</strong> Use the Admin Panel for advanced patient management</li>
+            <li><strong>Track Statistics:</strong> Monitor patient demographics and insurance provider distribution</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function loadDummyData() {
+  if (confirm('This will load sample patient data. Continue?')) {
+    // In a real application, you would make an AJAX call to load dummy data
+    alert('In a production environment, this would load sample data via AJAX. For now, use the management command: python manage.py load_dummy_patients');
+  }
+}
+
+// Initialize progress bars
+$(document).ready(function() {
+  $('.progress .progress-bar').each(function() {
+    var width = $(this).data('width');
+    $(this).css('width', width + '%');
+  });
+});
+</script>
+{% endblock %}
