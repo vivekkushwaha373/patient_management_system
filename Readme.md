@@ -6,16 +6,26 @@ A Django-based web application for managing patient records and workflows.
 
 ### use Credentials in .env
 
+## 🔐 Environment Variables (`.env`)
+
+Create a `.env` file in the root directory with the following content:
+
+```bash
+# Django Secret Key & Debug Mode
 SECRET_KEY=your-secret-key-here
 DEBUG=True
+
+# PostgreSQL Database Configuration (Supabase)
 DATABASE_NAME=postgres
 DATABASE_USER=postgres.pgfsdnwnitlplwhakzii
 DATABASE_PASSWORD=B74KfK9Dc&Gb*#Z
 DATABASE_HOST=aws-0-ap-south-1.pooler.supabase.com
 DATABASE_PORT=6543
 
-adminusername vivek
-adminpassword 12345678
+# Admin Credentials (for local development)
+ADMIN_USERNAME=vivek
+ADMIN_PASSWORD=12345678
+
 
 
 ## 🚀 How to Run Locally
